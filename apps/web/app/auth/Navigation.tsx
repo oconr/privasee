@@ -18,7 +18,6 @@ export default function Navigation() {
           <NavItem href="/">My questions</NavItem>
           <NavItem href="/manage">Manage</NavItem>
           <NavItem href="/respond">Respond</NavItem>
-          <NavItem href="/progress">Progress</NavItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>
