@@ -10,8 +10,19 @@ type Property = {
   value: string;
 };
 
-export default function Properties() {
-  const [properties, setProperties] = useState<Property[]>([]);
+export default function Properties({
+  defaultValue,
+}: {
+  defaultValue?: string;
+}) {
+  const [properties, setProperties] = useState<Property[]>(
+    defaultValue
+      ? defaultValue.split(",").map((property) => {
+          const [key, value] = property.split(":");
+          return { key, value };
+        })
+      : []
+  );
 
   function addNew() {
     setProperties([...properties, { key: "", value: "" }]);
@@ -37,7 +48,12 @@ export default function Properties() {
     <div className="w-100 flex flex-col gap-2">
       <div className="w-100 flex flex-row justify-between items-center gap-2">
         <p className="text-md font-semibold text-slate-600">Properties</p>
-        <Button variant="secondary" onClick={addNew} className="h-7">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={addNew}
+          className="h-7"
+        >
           Add new
         </Button>
       </div>
@@ -46,6 +62,7 @@ export default function Properties() {
         name="properties"
         value={properties.map((p) => `${p.key}:${p.value}`).join(",")}
         className="hidden"
+        readOnly
       />
       {properties.map((p, i) => (
         <div className="flex flex-row gap-2" key={i}>
