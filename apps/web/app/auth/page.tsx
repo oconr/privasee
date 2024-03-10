@@ -18,6 +18,8 @@ export default async function Dashboard() {
       <DataTable
         columns={myColumns}
         data={assignedData.map((data) => data.fields)}
+        addButton={false}
+        bulkDelete
       />
     </div>
   );
