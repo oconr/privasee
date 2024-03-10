@@ -17,6 +17,8 @@ type SelectFieldProps = {
   label: string;
   name: string;
   placeholder: string;
+  disabled?: boolean;
+  defaultValue?: string;
 };
 
 export function SelectField({
@@ -24,9 +26,11 @@ export function SelectField({
   label,
   name,
   placeholder,
+  disabled = false,
+  defaultValue,
 }: SelectFieldProps) {
   return (
-    <Select name={name}>
+    <Select name={name} disabled={disabled} defaultValue={defaultValue}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
