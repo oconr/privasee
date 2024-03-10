@@ -17,8 +17,14 @@ export default async function NewQuestionPage() {
     const description = formData.get("description");
     const assignedTo = formData.get("assignedTo");
     const assignedToData = assignedTo.toString().split("-");
+    const delegateTo = formData.get("delegateTo");
     const answer = formData.get("answer");
     const properties = formData.get("properties");
+    let delegateToData = null;
+
+    if (delegateTo !== "") {
+      delegateToData = delegateTo.toString().split("-");
+    }
 
     const response = await fetch("http://localhost:5001/questions/new", {
       method: "POST",
@@ -34,11 +40,12 @@ export default async function NewQuestionPage() {
         assignedTo: answer !== "" ? null : assignedToData[0],
         answer,
         properties,
+        delegateTo: delegateToData,
       }),
     });
 
     const data = await response.json();
-    redirect(`/manage/question/${data.fields._recordId}`);
+    redirect(`/manage`);
   }
   const session = cookies().get("session_jwt").value;
   const companyResponse = await fetch("http://localhost:5001/companies", {
@@ -81,7 +88,14 @@ export default async function NewQuestionPage() {
           name="assignedTo"
           placeholder="Assigned to"
         />
-        <Textarea name="answer" placeholder="Answer" className="mb-2" />
+        <Textarea name="answer" placeholder="Answer" />
+        <SelectField
+          label="Delegate"
+          data={users}
+          name="delegateTo"
+          placeholder="Delegate to"
+        />
+        <div className="mb-2" />
         <Properties />
         <Button type="submit">Create question</Button>
       </form>
